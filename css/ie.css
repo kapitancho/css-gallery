@@ -1,0 +1,25 @@
+	.gallery input {
+		display: block;
+		position: absolute;
+		margin-top: -1000px;
+	}
+
+	.gallery-opacity input {
+		behavior:url(css/opacity.htc);
+	}
+	.gallery-horizontal input {
+		behavior:url(css/horizontal.htc);
+	}
+	.gallery-vertical input {
+		behavior:url(css/vertical.htc);
+	}
+
+	.gallery-opacity .gallery-image {
+		filter:alpha(opacity=0);
+	}
+		
+	input + .gallery-image {
+		/*opacity: auto !important;*/
+	}
+	
+		

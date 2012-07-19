@@ -1,0 +1,66 @@
+<component>
+<attach event="onpropertychange" onevent="propertyChange()" />
+<script type="text/javascript">
+//<![CDATA[
+
+var p = function (el) {
+	while (el.previousSibling) {
+		el = el.previousSibling;
+		if (el.nodeType == 1) return el;
+	}
+};
+var n = function (el) {
+	while (el.nextSibling) {
+		el = el.nextSibling;
+		if (el.nodeType == 1) return el;
+	}
+};
+var n1, n2, z = this;
+
+function propertyChange (initial) {
+	if (initial === true || window.event.propertyName == 'checked') {
+		n1 = n (this);
+		n2 = n (n1);
+		if (this.checked) {
+			setTimeout (function() {
+				var toMargin = parseInt (n1.style.marginLeft) > 0 ? 1 : 0;
+				var t = initial === true ? 80 : 0;
+				setTimeout (function() {
+					t += 20;
+					n1.style.width = t + '%';
+					n1.style.marginLeft = ((100 - t) * toMargin) + '%';
+					if (t < 100) {
+						setTimeout (arguments.callee, 50);
+					}
+				}, 50);
+				n2.style.display = 'block';
+			}, 10);
+		} else {
+			var cb = p (this);
+			setTimeout (function() {
+				var toMargin = 0; 
+				while (cb) { 
+					if (cb.checked) {
+						toMargin = 1;
+						break;
+					}
+					cb = p (cb);
+				}
+				var t = initial === true ? 20 : 100;
+				setTimeout (function() {
+					t -= 20;
+					n1.style.width = t + '%';
+					n1.style.marginLeft = ((100 - t) * toMargin) + '%';
+					if (t > 0) {
+						setTimeout (arguments.callee, 50);
+					}
+				}, 50);
+				n2.style.display = 'none';
+			}, 10);
+		}
+	}
+}
+propertyChange (true);
+//]]>
+</script>
+</component>

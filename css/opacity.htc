@@ -1,0 +1,46 @@
+<component>
+<attach event="onpropertychange" onevent="propertyChange()" />
+<script type="text/javascript">
+//<![CDATA[
+
+var n = function (el) {
+	while (el.nextSibling) {
+		el = el.nextSibling;
+		if (el.nodeType == 1) return el;
+	}
+}
+var n1, n2, z = this;
+
+function propertyChange (initial) {
+	if (initial === true || window.event.propertyName == 'checked') {
+		n1 = n (this);
+		n2 = n (n1);
+		if (this.checked) {
+			var t = initial === true ? 80 : 0;
+			setTimeout (function() {
+				t += 20;
+				n1.style.filter = 'alpha(opacity=' + t + ')';
+				n1.style.opacity = t/100;
+				if (t < 100) {
+					setTimeout (arguments.callee, 50);
+				}
+			}, 50);
+			n2.style.display = 'block';
+		} else {
+			var t = initial === true ? 20 : 100;
+			setTimeout (function() {
+				t -= 20;
+				n1.style.filter = 'alpha(opacity=' + t + ')';
+				n1.style.opacity = t/100;
+				if (t > 0) {
+					setTimeout (arguments.callee, 50);
+				}
+			}, 50);
+			n2.style.display = 'none';
+		}
+	}
+}
+propertyChange (true);
+//]]>
+</script>
+</component>
